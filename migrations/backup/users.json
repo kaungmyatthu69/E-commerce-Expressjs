@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "65c5dfc95c57c9362ea061f3",
+    "name": "owner",
+    "email": "owner@gamil.com",
+    "password": "$2a$10$Z/RSgCGCUb.mSY8G1TvQDe7YV6hb6CouvgFztuo8hbhIIMM/ZBrYW",
+    "phone": "097888889",
+    "role": [],
+    "permits": [],
+    "created": "2024-02-09T08:18:17.911Z",
+    "__v": 0
+  },
+  {
+    "_id": "65c5dfc95c57c9362ea061f2",
+    "name": "John Doe",
+    "email": "johndow@gamil.com",
+    "password": "$2a$10$cUM4auLSC6UsG4okP2ihQeyrEw4G2YPsn4KIg1pv5xYkznC8Z83u2",
+    "phone": "09788888",
+    "role": [],
+    "permits": [],
+    "created": "2024-02-09T08:18:17.763Z",
+    "__v": 0
+  }
+]

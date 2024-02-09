@@ -1,0 +1,14 @@
+[
+  {
+    "name": "John Doe",
+    "email": "johndow@gamil.com",
+    "password": "123456",
+    "phone": "09788888"
+  },
+  {
+    "name": "owner",
+    "email": "owner@gamil.com",
+    "password": "1234567",
+    "phone": "097888889"
+  }
+]
