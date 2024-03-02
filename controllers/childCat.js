@@ -1,9 +1,9 @@
 const ChildCatModel = require('../models/childCat');
 const SubCatModel = require('../models/subCat');
 const Helper= require('../utils/helper');
-const getAll = async (req, res) => {
+const getAll = async (req,res,next)=>{
     let DBChildCat = await ChildCatModel.find();
-    Helper.fMsg(res,'get all child category', DBChildCat);
+    Helper.fMsg(res,'get all child category',DBChildCat);
 }
 
 const add = async (req,res,next)=>{
@@ -32,6 +32,11 @@ const drop = async (req,res,next)=>{
 const patch = async (req,res,next)=>{
     let DbChildCat = await ChildCatModel.findById(req.params.id);
     if(DbChildCat){
+        let subCatId = req.body.subCatId;
+        if(subCatId){
+            await SubCatModel.findByIdAndUpdate(DbChildCat.subCatId,{$pull:{childCategories: DbChildCat._id}})
+            await SubCatModel.findByIdAndUpdate(subCatId,{$push:{childCategories:DbChildCat._id}})
+        }
         await ChildCatModel.findByIdAndUpdate(DbChildCat._id,req.body);
         let result = await ChildCatModel.findById(DbChildCat._id);
         Helper.fMsg(res,'Successfully updated',result);

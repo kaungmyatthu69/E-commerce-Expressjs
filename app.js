@@ -12,6 +12,10 @@ const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
 const subCatRoutes = require('./routes/subcat');
 const childCatRoutes = require('./routes/chilCat')
+const tagRoutes = require('./routes/tag');
+const deliveryRoutes = require('./routes/delivery');
+const warrantyRoutes = require('./routes/warranty');
+const productRoutes = require('./routes/product')
 // const {backup} = require("./migrations/migrator");
 const {validateToken, hadAnyRole ,validateRole} = require("./utils/validator");
 
@@ -25,6 +29,11 @@ app.use('/users',userRoutes);
 app.use('/categories',categoryRoutes)
 app.use('/subcat',subCatRoutes)
 app.use('/childCat',childCatRoutes)
+app.use('/tags',tagRoutes)
+app.use('/delivery',deliveryRoutes)
+app.use('/warranty',warrantyRoutes)
+app.use('/products/', productRoutes);
+
 app.use((err,req,res,next)=>{
     err.status = err.status || 200;
     res.status(err.status).json({con:false,msg:err.message })
