@@ -35,8 +35,74 @@ const drop = async (req,res,next)=>{
         next(new Error('no product with that id '))
     }
 }
+
+const paginate = async (req,res,next)=>{
+    let pageNumber = Number(req.params.pageNumber);
+    const limit = Number(process.env.PAGE_LIMIT);
+    const reqPage = pageNumber - 1;
+    const skipCount = reqPage * limit;
+    let result = await ProductModel.find().skip(skipCount).limit(limit);
+    Helper.fMsg(res,'paginate',result);
+}
+
+const getById = async (req,res,next)=>{
+    let DBProduct = await ProductModel.findById(req.params.id);
+    if(DBProduct){
+        Helper.fMsg(res,'Get By Id',DBProduct);
+    }else {
+        next(new Error('No product with this id'));
+    }
+}
+
+
+const patch = async (req,res,next)=>{
+    let DBProduct = await ProductModel.findById(req.params.id);
+    if(DBProduct) {
+        await ProductModel.findByIdAndUpdate(DBProduct._id,req.body);
+        let result = await ProductModel.findById(req.params.id);
+        Helper.fMsg(res,'Successfully updated',result);
+    }else {
+        next(new Error('No product with this id'));
+    }
+}
+
+const filter =async (res,req,next)=>{
+    // let type = req.params.type;
+    console.log('type',req)
+    // let pageNumber = Number(req.params.pageNumber);
+    // const limit = Number(process.env.PAGE_LIMIT);
+    // const reqPage = pageNumber - 1;
+    // const skipCount = reqPage * limit;
+    //
+    // let filterType = 'category'
+    // switch (type){
+    //     case type === 'subcat':
+    //         filterType = 'subCatId';
+    //         break;
+    //     case type === 'childcat':
+    //         filterType = 'childCatId';
+    //         break;
+    //     case type === 'tag':
+    //         filterType = 'tag';
+    //         break;
+    //     case type === 'category':
+    //         filterType = 'category';
+    //         break;
+    // }
+    // let TypeObject = {};
+    // TypeObject[filterType] = req.params.id;
+    //
+    // let result = await ProductModel.find(TypeObject).skip(skipCount).limit(limit);
+    Helper.fMsg(res,'filter');
+
+}
 module.exports = {
     getAll,
     add,
-    drop
+    drop,
+    paginate,
+    getById,
+    patch,
+    filter
+
 }
