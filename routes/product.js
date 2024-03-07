@@ -3,7 +3,6 @@ const Controller = require('../controllers/product');
 const {saveFiles} = require('../utils/gallery')
 
 
-router.get('/paginate/filter/:type/:pageNumber/:id',Controller.filter)
 
 
 router.route('/')
@@ -16,6 +15,8 @@ router.route('/:id')
     .patch(Controller.patch)
 
 router.get('/paginate/:pageNumber',Controller.paginate)
+router.get('/paginate/filter/:type/:pageNumber/:id',Controller.filter)
+
 
 
 

@@ -66,34 +66,33 @@ const patch = async (req,res,next)=>{
     }
 }
 
-const filter =async (res,req,next)=>{
-    // let type = req.params.type;
-    console.log('type',req)
-    // let pageNumber = Number(req.params.pageNumber);
-    // const limit = Number(process.env.PAGE_LIMIT);
-    // const reqPage = pageNumber - 1;
-    // const skipCount = reqPage * limit;
-    //
-    // let filterType = 'category'
-    // switch (type){
-    //     case type === 'subcat':
-    //         filterType = 'subCatId';
-    //         break;
-    //     case type === 'childcat':
-    //         filterType = 'childCatId';
-    //         break;
-    //     case type === 'tag':
-    //         filterType = 'tag';
-    //         break;
-    //     case type === 'category':
-    //         filterType = 'category';
-    //         break;
-    // }
-    // let TypeObject = {};
-    // TypeObject[filterType] = req.params.id;
-    //
-    // let result = await ProductModel.find(TypeObject).skip(skipCount).limit(limit);
-    Helper.fMsg(res,'filter');
+const filter =async (req,res,next)=>{
+    let type = req.params.type;
+    let pageNumber = Number(req.params.pageNumber);
+    const limit = Number(process.env.PAGE_LIMIT);
+    const reqPage = pageNumber - 1;
+    const skipCount = reqPage * limit;
+
+    let filterType = 'category'
+    switch (type){
+        case type === 'subcat':
+            filterType = 'subCatId';
+            break;
+        case type === 'childcat':
+            filterType = 'childCatId';
+            break;
+        case type === 'tag':
+            filterType = 'tag';
+            break;
+        case type === 'category':
+            filterType = 'category';
+            break;
+    }
+    let TypeObject = {};
+    TypeObject[filterType] = req.params.id;
+
+    let result = await ProductModel.find(TypeObject).skip(skipCount).limit(limit);
+    Helper.fMsg(res,'filter',result);
 
 }
 module.exports = {
