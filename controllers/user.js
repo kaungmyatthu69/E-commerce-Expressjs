@@ -23,20 +23,27 @@ const register =async (req,res,next)=>{
 const login =async (req,res,next)=>{
     let userPhone = await UserModel.findOne({phone:req.body.phone}).populate('role permits').select("-__v");
     if(userPhone){
+        console.log("user",userPhone.password)
         let userPassword= Helper.comparePassword(req.body.password,userPhone.password);
-
         if(userPassword) {
             let user = userPhone.toObject();
+
             delete  user.password;
             user.token = Helper.makeToken(user)
             Helper.set(user._id,user);
             Helper.fMsg(res, 'User is logged in', user);
         }else {
-            next(new Error('Creditial Error'));
+            next(new Error('Creditial dsf Error'));
         }
     }else {
         next(new Error('Creditial Error'));
     }
+}
+
+const getAllUser = async (req,res,next)=>{
+    let users = await UserModel.find().populate('role permits').select("-__v");
+    Helper.fMsg(res,'All users',users);
+
 }
 
 const addRole = async (req,res,next)=>{
@@ -99,5 +106,6 @@ module.exports = {
     addRole,
     removeRole,
     addPermit,
-    removePermit
+    removePermit,
+    getAllUser
 }

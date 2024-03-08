@@ -28,15 +28,24 @@ const validateParams=(schema,name)=>{
 const validateToken=async (req,res,next)=>{
     let token =  req.headers.authorization.split(' ')[1];
     if(token){
-       let decoded=jwt.verify(token,process.env.SECRET_KEY)
-        console.log(decoded._id)
-        let user = await Helper.get(decoded._id);
-       if(user){
-              req.user = user
-              next();
-       }else {
-           next(new Error('User not found'));
-       }
+        try{
+            let decoded=jwt.verify(token,process.env.SECRET_KEY)
+            if(decoded){
+                let user = await Helper.get(decoded._id);
+                if(user){
+                    req.user = user
+                    next();
+                }else {
+                    next(new Error('User not found'));
+                }
+            }else {
+                next(new Error('Unauthorized'))
+            }
+        }catch (error){
+            next(new Error('token expired'))
+        }
+
+
     }else {
         return res.status(400).json({message:'Token is required'});
     }

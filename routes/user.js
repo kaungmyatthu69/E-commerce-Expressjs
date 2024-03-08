@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Controller = require('../controllers/user');
 const {validateBody, validateToken, validateRole} = require("../utils/validator");
 const {UserSchema} = require("../utils/schema");
+router.get('/',Controller.getAllUser)
 router.post('/register',validateBody(UserSchema.registerUser),Controller.register)
 router.post('/login',validateBody(UserSchema.loginUser),Controller.login)
 router.post('/add/roles',validateToken,validateRole('Owner'),validateBody(UserSchema.addRole),Controller.addRole)

@@ -32,6 +32,17 @@ const add =async (req,res,next)=>{
     Helper.fMsg(res,'Order accepted',result);
 }
 
+const getMyOrders= async (req,res,next)=>{
+    const user = req.user;
+    let orders = await OrderModel.find({user:user._id}).populate('items');
+    if(orders){
+        Helper.fMsg(res,'Orders',orders);
+
+    }else{
+        next(new Error('No orders found'))
+    }
+}
 module.exports = {
-    add
+    add,
+    getMyOrders
 }
